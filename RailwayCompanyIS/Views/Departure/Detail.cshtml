@@ -1,0 +1,53 @@
+﻿@model RailwayCompanyIS.Models.Departure.DepartureDetailModel;
+@{
+    ViewData["Title"] = "Подробнее о рейсе";
+}
+
+    <div class="container">
+        <div class="page-header clearfix datailHeading">
+        <h2 class="text-muted">Подробнее о рейсе #@Model.Id</h2>
+        </div>
+    </div>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-3 bg-primary">
+            <div class="nameItem">Откуда:</div>
+            <p class="itemName">@Model.CityFrom.Name</p>
+            <div class="nameItem">Куда:</div>
+            <p class="itemName">@Model.CityTo.Name</p>
+            <div class="nameItem">Расстояние:</div>
+            <p class="itemName">@Model.Distance.DistanceBetween</p>
+            <div class="nameItem">Машинист:</div>
+            <p class="itemName">@Model.Carrier.Name</p>
+        </div>
+        <div class="col-md-3">
+            <div class="nameItem">Регистрационный номер поезда:</div>
+            <p class="itemName">@Model.Vehicle.RegistrationNumber</p>
+            <div class="nameItem">Тип поезда:</div>
+            <p class="itemName">@Model.Vehicle.VehicleType</p>
+            <div class="nameItem">Вид вагона:</div>
+            <p class="itemName">@Model.PaymentCategory.Name</p>
+            <div class="nameItem">Туристический поезд:</div>
+            @if (Model.Vehicle.Tourist)
+            {
+                <p class="itemName">Да</p>
+            }
+            else
+            {
+                <p class="itemName">Нет</p>
+            }
+        </div>
+        <div class="col-md-3 bg-primary">
+            <div class="nameItem">Вместимость поезда:</div>
+            <p class="itemName">@Model.NumberOfSeats</p>
+            <div class="nameItem">Цена:</div>
+            <p class="itemName">@Model.PriceOfCard₽</p>
+            <div class="nameItem">Дата отправления:</div>
+            <p class="itemName">@Model.DateOfDeparture.ToString("dd-M-yyyy HH:mm tt")</p>
+            <div class="nameItem">Дата прибытия:</div>
+            <p class="itemName">@Model.DateOfArrival.ToString("dd-M-yyyy HH:mm tt")</p>
+        </div>
+    </div>
+</div>
+

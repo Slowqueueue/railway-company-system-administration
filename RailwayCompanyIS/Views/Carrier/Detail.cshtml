@@ -1,0 +1,95 @@
+﻿@model RailwayCompanyIS.Models.CarrierViewModel.CarrierDetailModel;
+@{
+    ViewData["Title"] = "Подробнее о машинисте";
+}
+
+<div class="container">
+        <div class="page-header clearfix datailHeading">
+        <h2 class="text-muted">Подробнее о машинисте #@Model.Id</h2>
+        </div>
+</div>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <h4>Имя:</h4>
+                <p>@Model.Name</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4>Адрес:</h4>
+            <p>@Model.Address.StreetName, @Model.Address.StreetNumber (@Model.Address.City.Name)</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Контакты:</h4>
+            <p>@Model.Contacts</p>
+            <a asp-controller="Carrier" asp-action="AddContact" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-lg">Добавить новый контакт</a>
+            <br /><br />
+            <a asp-controller="Carrier" asp-action="DeleteContact" asp-route-id="@Model.Id" class="btn btn-danger btn-lg aria-label="Delete"><i class="mdi mdi-delete" aria-hidden="true"></i>Удалить контакты</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="row m-auto justify-content-center">
+    <div class="col-auto">
+        @if (TempData["msg"] != null)
+        {
+            <div id="containerInfo">
+                <p>
+                    @TempData["msg"]
+                </p>
+
+            </div>
+            <br />
+        }
+    <h4>Поезда</h4>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                <th>Регистрационный номер</th>
+                <th>Туристический</th>
+                <th>Вместимость</th>
+                <th>Тип поезда</th>
+            </tr>
+        </thead>
+        @if (Model.Vehicles == null || Model.Vehicles.Count() == 0)
+        {
+            <div>
+                <p>
+                    Нет данных
+                </p>
+            </div>
+        }
+        else
+        {
+            <tbody>
+                @foreach (var vehicle in Model.Vehicles)
+                {
+                    <tr>
+                        <td>@vehicle.RegistrationNumber</td>
+                            @if (vehicle.Tourist)
+                            {
+                                <td>Да</td>
+                            }
+                            else
+                            {
+                                <td>Нет</td>
+                            }
+                        <td>@vehicle.Capacity</td>
+                        <td>@vehicle.VehicleType</td>
+                    </tr>
+                }
+            </tbody>
+
+        }
+    </table>
+    </div>
+    <div class="col-lg-2">
+        <a class="btn btn-outline-primary btn-lg" asp-controller="Carrier" asp-action="AddVehicle" asp-route-id="@Model.Id">Добавить новый поезд</a>
+        <br /><br />
+        <a asp-controller="Carrier" asp-action="DeleteVehicle" asp-route-id="@Model.Id" class="btn btn-danger btn-lg aria-label="Delete"><i class="mdi mdi-delete" aria-hidden="true"></i>Удалить поезда</a>
+    </div>
+</div>
+<br />

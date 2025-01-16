@@ -1,0 +1,94 @@
+﻿@model RailwayCompanyIS.Models.Carrier.CarrierInputModel;
+@{
+    ViewData["Title"] = "Добавить нового машиниста";
+}
+
+
+<div class="container">
+    <div class="page-header clearfix datailHeading">
+        <h2 class="text-muted">Добавить нового машиниста</h2>
+    </div>
+</div>
+
+<div class="row m-auto justify-content-center">
+    <div class="col-7">
+        @if(TempData["msg"] != null)
+        {
+            <div id="containerInfo">
+                <p>
+                    @TempData["msg"]
+                </p>
+
+            </div>
+            <br />
+        }
+        <div class="border">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="container" style="padding:30px;background-color:#E9ECEF;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Имя:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Name" class="form-control" />
+                            </div>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Названия города:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="CityName" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var city in Model.Cities)
+                                    {
+                                        <option>@city.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Название улицы:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="StreetName" class="form-control" />
+                            </div>
+                            <span asp-validation-for="StreetName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Номер дома:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="StreetNumber" class="form-control" />
+                            </div>
+                            <span asp-validation-for="StreetNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <input type="submit" value="Подтвердить" class="btn btn-success form-control" />
+                            </div>
+                            <div class="col-sm-3">
+                                <a asp-controller="Carrier" asp-action="Index" class="btn btn-warning form-control">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

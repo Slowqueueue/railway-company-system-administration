@@ -1,0 +1,134 @@
+﻿@model RailwayCompanyIS.Models.Departure.DepartureInputModel;
+@{
+    ViewData["Title"] = "Добавить новый рейс";
+}
+
+<div class="container">
+    <div class="page-header clearfix datailHeading">
+        <h2 class="text-muted">Добавить новый рейс</h2>
+    </div>
+</div>
+
+
+<div class="row m-auto justify-content-center">
+    <div class="col-8">
+        @if (TempData["msg"] != null)
+        {
+            <div id="containerInfo">
+                <p>
+                    @TempData["msg"]
+                </p>
+            </div>
+            <br />
+        }
+        <div class="border">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="container" style="padding:30px;background-color:#E9ECEF;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Откуда:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="CityFrom" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var cityfrom in Model.Cities)
+                                    {
+                                        <option>@cityfrom.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Куда:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="CityTo" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var cityto in Model.Cities)
+                                    {
+                                        <option>@cityto.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Дата:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="DateOfDeparture" type="datetime-local" value="@DateTime.Now.ToString("yyyy-M-ddTHH:mm")" class="form-control" style="font-size:16px">
+                            </div>
+                            <span asp-validation-for="DateOfDeparture" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Машинист:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Carrier" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var carrier in Model.Carriers)
+                                    {
+                                        <option>@carrier.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Вид вагона:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="PaymentCategory" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var payment in Model.PaymentCategories)
+                                    {
+                                        <option>@payment.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Регистрационный номер поезда:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="VehicleRegistration" class="form-group selcls" style="font-size:16px">
+                                    @foreach (var vehicle in Model.Vehicles)
+                                    {
+                                        <option>@vehicle.RegistrationNumber</option>
+                                    }
+                                </select>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <input type="submit" value="Подтвердить" class="btn btn-success form-control" />
+                            </div>
+                            <div class="col-sm-3">
+                                <a asp-controller="Departure" asp-action="Index" class="btn btn-warning form-control">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

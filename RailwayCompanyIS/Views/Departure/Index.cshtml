@@ -1,0 +1,125 @@
+﻿@model RailwayCompanyIS.Models.Departure.DepartureIndexModel;
+@{
+    ViewData["Title"] = "Рейсы";
+}
+
+@section Scripts {
+    <script src="~/js/mysite.js"></script>
+}
+
+@foreach (var dept in Model.Departures.Reverse())
+{
+    if (DateTime.Now < dept.DateOfDeparture.AddMinutes(1) && dept.DateOfDeparture < DateTime.Now)
+    {
+        <div class="pos-rel">
+            <div class="pos-rel" id="customAlert">
+                <audio id="departure_sound" src="sounds/departure.mp3" muted="muted" autoplay="autoplay"></audio>
+                <div id="alertSymbol">_____&#128642&#128643&#128643&#128643_____&#127970;</div>
+                <div id="alertMessage">
+                    <div class="heading2" ID="alertMessageM" Text="Message">Рейс #@dept.Id<br />Поезд #@dept.Vehicle.RegistrationNumber отправляется из города @dept.CityFrom.Name в город @dept.CityTo.Name</div>
+                </div>
+                <button id="closeButton" onclick="hideCustomAlert()">Закрыть</button>
+            </div>
+            <div id="overlay"></div>
+        </div>
+        <body onload="showCustomAlert()"></body>
+    }
+
+    if (DateTime.Now < dept.DateOfArrival.AddMinutes(1) && dept.DateOfArrival < DateTime.Now)
+    {
+        <div class="pos-rel">
+            <div class="pos-rel" id="customAlert">
+                <audio id="departure_sound" src="sounds/arrival.mp3" muted="muted" autoplay="autoplay"></audio>
+                <div id="alertSymbol">&#127970_____&#128642&#128643&#128643&#128643;_____</div>
+                <div id="alertMessage">
+                    <div class="heading2" ID="alertMessageM" Text="Message">Рейс #@dept.Id<br />Поезд #@dept.Vehicle.RegistrationNumber прибывает из города @dept.CityFrom.Name в город @dept.CityTo.Name</div>
+                </div>
+                <button id="closeButton" onclick="hideCustomAlert()">Закрыть</button>
+            </div>
+            <div id="overlay"></div>
+        </div>
+        <body onload="showCustomAlert()"></body>
+    }
+}
+<div class="container">
+    <div class="page-header clearfix datailHeading">
+        <h2 class="text-muted">Рейсы</h2>
+    </div>
+</div>
+
+
+<div><br /></div>
+
+<div class="row m-auto justify-content-center">
+    <div class="col-auto">
+        @if (TempData["msg"] != null)
+        {
+            <div id="containerInfo">
+                <p>
+                    @TempData["msg"]
+                </p>
+
+            </div>
+            <br />
+        }
+        <a class="btn btn-outline-primary btn-lg" asp-controller="Departure" asp-action="Create">Добавить новый рейс</a>
+        <div>
+            <p></p>
+        </div>
+        <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Информация</th>
+                    <th scope="col">Номер рейса</th>
+                    <th scope="col">Откуда</th>
+                    <th scope="col">Куда</th>
+                    <th scope="col">Дата отправления</th>
+                    <th scope="col">Дата прибытия</th>
+                    <th scope="col">Машинист</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Вместимость</th>
+                    <th scope="col">Расстояние</th>
+                    <th scope="col">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dept in Model.Departures.Reverse())
+                {
+                    <tr>
+                        <td>
+                            <form asp-action="Detail" asp-controller="Departure" asp-route-id=@dept.Id>
+                                <button type="submit" class="btn btn-outline-primary" aria-label="Info">
+                                    <i class="mdi mdi-information"></i> Подробнее
+                                </button>
+                            </form>
+                        </td>
+                        <td>@dept.Id</td>
+                        <td>@dept.CityFrom.Name</td>
+                        <td>@dept.CityTo.Name</td>
+                        <td>@dept.DateOfDeparture.ToString("dd-M-yyyy HH:mm tt")</td>
+                        <td>@dept.DateOfArrival.ToString("dd-M-yyyy HH:mm tt")</td>
+                        <td>@dept.Carrier.Name</td> 
+                        <td>@dept.PriceOfCard₽</td>
+                        <td>@dept.NumberOfSeats</td>
+                        <td>@dept.Distance.DistanceBetween</td>
+                        <td>
+                            <div class="col-auto">
+                                <form asp-action="Edit" asp-controller="Departure" asp-route-id=@dept.Id>
+                                    <button type="submit" class="btn btn-success" aria-label="Edit">
+                                        <i class="mdi mdi-pencil"></i> Изменить
+                                    </button>
+                                </form>
+                                <form asp-action="Delete" asp-route-id="@dept.Id">
+                                    <button type="submit" class="btn btn-danger" aria-label="Delete">
+                                        <i class="mdi mdi-delete" aria-hidden="true"></i> Удалить
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
